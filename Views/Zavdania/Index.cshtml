@@ -1,0 +1,74 @@
+@model List<TodoMVC.Models.Zavdania>
+
+@if (TempData["Error"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["Error"]
+    </div>
+}
+
+@if (Model != null && Model.Any())
+{
+    <div class="container mt-4">
+        <h2 class="text-center text-primary">Список Завдань</h2>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Назва</th>
+                        <th>Опис</th>
+                        <th>Пріоритет</th>
+                        <th>Статус</th>
+                        <th>Дії</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var zavdania in Model)
+                    {
+                        <tr>
+                            <td>@zavdania.Title</td>
+                            <td>@zavdania.Description</td>
+                            <td>
+                                <span class="badge badge-@(zavdania.Priority == "Високий" ? "danger" : zavdania.Priority == "Середній" ? "warning" : "success") text-dark">
+                                    @zavdania.Priority
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-@(zavdania.IsCompleted ? "success" : "secondary") text-dark">
+                                    @(zavdania.IsCompleted ? "Виконано" : "Не виконано")
+                                </span>
+                            </td>
+                            <td>
+                                <a href="@Url.Action("Edit", "Zavdania", new { id = zavdania.Id })" class="btn btn-warning btn-sm">Редагувати</a>
+                                <a href="@Url.Action("Delete", "Zavdania", new { id = zavdania.Id })" class="btn btn-danger btn-sm">Видалити</a>
+                                @if (!zavdania.IsCompleted)
+                                {
+                                    <a href="@Url.Action("MarkAsCompleted", "Zavdania", new { id = zavdania.Id })" class="btn btn-success btn-sm">Позначити як виконане</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center mt-4">
+        <h4 class="text-danger">Немає завдань</h4>
+    </div>
+}
+
+<div class="text-center mt-4">
+    <a href="@Url.Action("Add", "Zavdania")" class="btn btn-primary">
+        <i class="glyphicon glyphicon-plus"></i> Додати нове завдання
+    </a>
+    <a href="@Url.Action("NewList", "Zavdania")" class="btn btn-outline-danger btn-lg" onclick="return confirm('Ви впевнені, що хочете створити новий список? Усі існуючі завдання буде видалено.')">
+        <i class="glyphicon glyphicon-trash"></i> Створити новий список
+    </a>
+    <a href="@Url.Action("OpenList", "Zavdania")" class="btn btn-outline-primary btn-lg">
+        <i class="glyphicon glyphicon-folder-open"></i> Відкрити існуючий список
+    </a>
+</div>

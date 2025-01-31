@@ -1,0 +1,40 @@
+@model TodoMVC.Models.Zavdania
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-danger text-white text-center">
+            <h2>Створення нового списку</h2>
+        </div>
+        <div class="card-body text-center">
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["ErrorMessage"]
+                </div>
+            }
+            <p class="text-danger">
+                Ви впевнені, що хочете створити новий список? Усі існуючі завдання буде видалено.
+            </p>
+            <form asp-action="ConfirmNewList" method="post">
+                <div class="form-group">
+                    <label for="newFilePath" class="form-label">Шлях до нового файлу:</label>
+                    <input 
+                        type="text" 
+                        name="newFilePath" 
+                        id="newFilePath" 
+                        class="form-control" 
+                        placeholder="Введіть шлях для створення нового файлу, наприклад: zavdania_new.json" 
+                        required />
+                </div>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-danger btn-lg" onclick="return confirm('Ви впевнені, що хочете створити новий список?')">
+                        <i class="fas fa-trash"></i> Створити
+                    </button>
+                    <a href="@Url.Action("Index", "Zavdania")" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-arrow-left"></i> Скасувати
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

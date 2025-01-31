@@ -1,0 +1,43 @@
+@model TodoMVC.Models.Zavdania
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white text-center">
+            <h2>Редагувати завдання</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit" method="post">
+                <input type="hidden" name="Id" value="@Model.Id" />
+
+                <div class="form-group">
+                    <label for="Title">Назва:</label>
+                    <input type="text" id="Title" name="Title" class="form-control" value="@Model.Title" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="Description">Опис:</label>
+                    <textarea id="Description" name="Description" class="form-control">@Model.Description</textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="Priority">Пріоритет:</label>
+                    <input type="number" id="Priority" name="Priority" class="form-control" value="@Model.Priority" min="1" max="10" />
+                </div>
+
+                <div class="form-check">
+                    <input type="checkbox" id="IsCompleted" name="IsCompleted" class="form-check-input" @(Model.IsCompleted ? "checked" : "") />
+                    <label class="form-check-label" for="IsCompleted">Статус виконання</label>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success">
+                        <i class="glyphicon glyphicon-save"></i> Зберегти
+                    </button>
+                    <a href="@Url.Action("Index", "Zavdania")" class="btn btn-secondary">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Повернутися до списку
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
